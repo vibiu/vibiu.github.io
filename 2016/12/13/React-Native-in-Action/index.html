@@ -1,0 +1,778 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans,en,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="React," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.jpg?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="起因写了一年的后端, 是时候试一下移动端的水了, 也有一直在看Java, 打算用原生Java入手Android, 但是由于一直在写动态脚本语言, Java使用得还是不太熟练, 就考虑先用JavaScript现在很火的移动框架React Native写喽.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native in Action">
+<meta property="og:url" content="http://blog.vibiu.cn/2016/12/13/React-Native-in-Action/index.html">
+<meta property="og:site_name" content="Vibiu's Blog">
+<meta property="og:description" content="起因写了一年的后端, 是时候试一下移动端的水了, 也有一直在看Java, 打算用原生Java入手Android, 但是由于一直在写动态脚本语言, Java使用得还是不太熟练, 就考虑先用JavaScript现在很火的移动框架React Native写喽.">
+<meta property="og:updated_time" content="2016-12-13T09:08:01.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React Native in Action">
+<meta name="twitter:description" content="起因写了一年的后端, 是时候试一下移动端的水了, 也有一直在看Java, 打算用原生Java入手Android, 但是由于一直在写动态脚本语言, Java使用得还是不太熟练, 就考虑先用JavaScript现在很火的移动框架React Native写喽.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '11369385',
+      author: 'Vibiu'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.vibiu.cn/2016/12/13/React-Native-in-Action/"/>
+
+
+
+
+
+  <title> React Native in Action | Vibiu's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-88895351-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Vibiu's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">do one thing and do it well</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://blog.vibiu.cn/2016/12/13/React-Native-in-Action/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="vibiu">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Vibiu's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Vibiu's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                React Native in Action
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-13T09:18:00+08:00">
+                2016-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/13/React-Native-in-Action/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/13/React-Native-in-Action/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>写了一年的后端, 是时候试一下移动端的水了, 也有一直在看Java, 打算用原生Java入手Android, 但是由于一直在写动态脚本语言, Java使用得还是不太熟练, 就考虑先用JavaScript现在很火的移动框架React Native写喽.</p>
+<a id="more"></a>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>Android的环境搭建有点小复杂, 而且由于目前手上的电脑配置比较低, 使用Android Studio怕会比较卡, 就打算直接配置JDK和SDK.</p>
+<h2 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h2><p>先从Oracle官网下载相应的JDK的压缩包,解压</p>
+<pre><code>$ tar -xf jdk-8u101-linux-x64.tar.gz
+</code></pre><p>将解压后的目录移动到安装目录, 比如~/opt, 将环境变量配置写入.bashrc或.zshrc</p>
+<pre><code>export JAVA_HOME=~/opt/jdk1.8.0_101
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+</code></pre><p>重开终端,这时候可以试下</p>
+<pre><code>$ javac --version
+</code></pre><h2 id="SDK"><a href="#SDK" class="headerlink" title="SDK"></a>SDK</h2><p>先从Google官网下载相应SDK压缩包, 这里我不打算使用Android Studio, 所以我只下载了 command line tools, 下好之后解压, 并把解压出的目录移动到安装目录, 比如~/opt, 将环境变量配置写入.bashrc或.zshrc</p>
+<pre><code>export ANDROID_HOME=~/opt/android-sdk-linux
+export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+Node.js
+</code></pre><p>这里使用nvm这个node多版本管理器安装器.<br>这篇教程相当详细, 值得参考.</p>
+<pre><code>git clone https://github.com/cnpm/nvm.git ~/.nvm &amp;&amp; cd ~/.nvm &amp;&amp; git checkout `git describe --abbrev=0 --tags`
+</code></pre><p>把nvm目录移动到安装目录, 比如~/opt, 在.bashrc 或.zshrc中写入</p>
+<pre><code>source ~/opt/nvm/nvm.sh
+</code></pre><p>重开终端nvm应该已经有用</p>
+<pre><code>$ nvm --version
+</code></pre><p>使用nvm安装任意版本的node都相当简单, 比如现在最新版的6.8.0</p>
+<pre><code>$ nvm install 6.8.0
+$ nvm use 6.8.0
+</code></pre><p>现在版本为6.8.0的node已经安装好,可以把它设为默认的版本</p>
+<pre><code>$ nvm alias default 6.8.0
+</code></pre><h2 id="React-native-cli"><a href="#React-native-cli" class="headerlink" title="React-native-cli"></a>React-native-cli</h2><p>react有比较详细的指导<br>使用node的包管理器npm安装react-native-cli</p>
+<pre><code>$ npm install -g react-native-cli
+</code></pre><p>使用react-native-cli生成应用目录</p>
+<pre><code>$ react-native init AwesomeProject
+$ cd AwesomeProject
+$ react-native run-android
+</code></pre><h2 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h2><p>如果只是按照上面的步骤, 会发现运行失败, 部分问题可以在React的 Troubleshooting page找到解决方法<br>而更多的是遇到Android的问题, 比如</p>
+<pre><code>Failed to find Build Tools revision 23.0.1
+</code></pre><p>这是因为新安装的SDK版本比较新, 但是react要求build tools版本必须是23.0.1.<br>Stack Overflow上有解决方法</p>
+<pre><code>$ android list sdk -a
+$ $android update sdk -a -u -t 3
+</code></pre><p>使Android设备与电脑连接一般是自动完成的, 但可能 no permission, 同样可以在Stack Overflow上找到解决方法</p>
+<pre><code>--&gt; /etc/udev/rules.d/51-android.rules
+    SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;04E8&quot;, MODE=&quot;0666&quot;, GROUP=&quot;plugdev&quot;
+
+$ adb kill-server
+$ adb start-server
+$ adb devices
+</code></pre><p>注意Android设备需要打开调试模式, 并使连接类型改成照相模式.<br>而下面这个错误就比较蛋疼</p>
+<pre><code>“aapt” IOException error=2, No such file or directory&quot;
+</code></pre><p>这是因为Aapt is a 32bit application. 在64bit的环境下无法正常运行, 同样在Stack OverFlow上能找到解决方法<br>这在各种操作系统上有所不同, 比如在Arch Linux上需要安装Multilib</p>
+<pre><code>$ sudo pacman -Syv lib32-libstdc++5 lib32-zlib
+</code></pre><p>差不多以上就是遇到的各种坑, 如果你不幸遇到其它问题, Google it, 或者在Statck OverFlow上找找, 总可以找到解决方法.</p>
+<h2 id="Developing"><a href="#Developing" class="headerlink" title="Developing"></a>Developing</h2><p>基本现在react-native run android可以正常运行了, 会在Android设备上自动安装你的应用, 可以通过摇动打开DEBUG模式.<br>React的模板思想和现在的Vue的模板还有一点差距, 后者专注于数据的渲染, 性能可观.<br>比较欣喜的是React默认支持fetch进行网络通信, 也支持ES2017.<br>推荐的Sublime-text插件Babel, 它能为JSX提供语法高亮.</p>
+<h2 id="The-end"><a href="#The-end" class="headerlink" title="The end"></a>The end</h2><p>Having fun in React Native.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/13/ArchLinux-in-Action/" rel="next" title="ArchLinux in Action">
+                <i class="fa fa-chevron-left"></i> ArchLinux in Action
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/13/Mysql-Pick-Up/" rel="prev" title="Mysql Pick Up">
+                Mysql Pick Up <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/13/React-Native-in-Action/"
+     data-title="React Native in Action"
+     data-content=""
+     data-url="http://blog.vibiu.cn/2016/12/13/React-Native-in-Action/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/13/React-Native-in-Action/"
+           data-title="React Native in Action" data-url="http://blog.vibiu.cn/2016/12/13/React-Native-in-Action/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="vibiu" />
+          <p class="site-author-name" itemprop="name">vibiu</p>
+          <p class="site-description motion-element" itemprop="description">vibiu's blog in hexo</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/vibiu" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.v2ex.com/member/vibiu" target="_blank" title="V2EX">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  V2EX
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/79d617435e01" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/vibiu" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#起因"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK"><span class="nav-number">3.</span> <span class="nav-text">JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDK"><span class="nav-number">4.</span> <span class="nav-text">SDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-native-cli"><span class="nav-number">5.</span> <span class="nav-text">React-native-cli</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Troubleshooting"><span class="nav-number">6.</span> <span class="nav-text">Troubleshooting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Developing"><span class="nav-number">7.</span> <span class="nav-text">Developing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-end"><span class="nav-number">8.</span> <span class="nav-text">The end</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vibiu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"vibiu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
